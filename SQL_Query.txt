@@ -1,0 +1,107 @@
+USE [BookLibrary]
+GO
+
+/****** Object:  Table [dbo].[UserDetails]    Script Date: 12/16/2021 5:41:15 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[UserDetails](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [varchar](100) NULL,
+	[EmailID] [varchar](100) NULL,
+	[contact] [bigint] NULL,
+	[Address] [varchar](100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[EmailID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[contact] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[BookDetails]    Script Date: 12/16/2021 5:41:07 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[BookDetails](
+	[BookID] [int] IDENTITY(101,1) NOT NULL,
+	[BookName] [varchar](100) NULL,
+	[AuthorName] [varchar](100) NULL,
+	[BookDescription] [varchar](200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BookID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[BookName] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+/****** Object:  Table [dbo].[BookAllocation]    Script Date: 12/16/2021 5:40:51 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[BookAllocation](
+	[AllocationID] [int] IDENTITY(1001,1) NOT NULL,
+	[UserId] [int] NULL,
+	[BookID] [int] NULL,
+	[UserName] [varchar](100) NULL,
+	[BookName] [varchar](100) NULL,
+	[IssuedDate] [smalldatetime] NULL,
+	[ReturnDate] [smalldatetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[AllocationID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[BookAllocation]  WITH CHECK ADD FOREIGN KEY([BookID])
+REFERENCES [dbo].[BookDetails] ([BookID])
+GO
+
+ALTER TABLE [dbo].[BookAllocation]  WITH CHECK ADD FOREIGN KEY([UserId])
+REFERENCES [dbo].[UserDetails] ([UserId])
+GO
+
+
+
